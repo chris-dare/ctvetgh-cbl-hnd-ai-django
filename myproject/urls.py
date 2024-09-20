@@ -19,6 +19,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', views.index, name='home'),
+    path('admin/', admin.site.urls),  # Admin route
+    path('', views.homepage, name='home'),  # Root URL directs to homepage view
 ]
+
