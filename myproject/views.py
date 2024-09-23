@@ -1,5 +1,6 @@
+from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render, redirect
 from .models import BlogPost
 from .forms import BlogPostForm
 
@@ -11,18 +12,18 @@ def homepage(request):
         return HttpResponse("This is a GET request")
 
 
-def create_blog_post(request):
-    if request.method == "POST":
-        form = BlogPostForm(request.POST)
-        if form.is_valid():
-            form.save()  # Saves the data to the BlogPost model
-            return redirect('blog_post_list')  # Redirect to the list view after saving
-    else:
-        form = BlogPostForm()
-
-    return render(request, 'create_blog_post.html', {'form': form})
+# ListView for displaying blog posts
+class BlogPostListView(ListView):
+    model = BlogPost
+    template_name = 'blog_post_list.html'
+    context_object_name = 'posts'
 
 
-def blog_post_list(request):
-    posts = BlogPost.objects.all()
-    return render(request, 'blog_post_list.html', {'posts': posts})
+# CreateView for creating new blog posts
+class BlogPostCreateView(CreateView):
+    model = BlogPost
+    form_class = BlogPostForm
+    template_name = 'create_blog_post.html'
+    success_url = reverse_lazy('blog_post_list')
+
+
