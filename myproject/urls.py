@@ -17,10 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from . import views
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),  # Admin route
     path('', views.homepage, name='home'),  # Root URL directs to homepage view
-    path('create/', views.BlogPostCreateView.as_view(), name='create_blog_post'), # url to your form
-    path('posts/', views.BlogPostListView.as_view(), name='blog_post_list'),  # url for listing posts
+    path('accounts/login/', auth_views.LoginView.as_view(), name='login'),  # use django's login view
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),  # use django's logout view
+    path('create/', views.BlogPostCreateView.as_view(), name='create_blog_post'),  # url to your form
+    path('posts/', views.BlogPostListView.as_view(), name='blog_post_list'),   # url for listing posts
 ]

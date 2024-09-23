@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView
 from django.http import HttpResponse, JsonResponse
@@ -20,7 +21,7 @@ class BlogPostListView(ListView):
 
 
 # CreateView for creating new blog posts
-class BlogPostCreateView(CreateView):
+class BlogPostCreateView(LoginRequiredMixin, CreateView):
     model = BlogPost
     form_class = BlogPostForm
     template_name = 'create_blog_post.html'
