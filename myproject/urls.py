@@ -21,5 +21,7 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),  # Admin route
     path('', views.homepage, name='home'),  # Root URL directs to homepage view
+    path('create/', views.create_blog_post, name='create_blog_post'), # url to your form
+    path('posts/', views.blog_post_list, name='blog_post_list'),  # New URL for listing posts
 ]
 
